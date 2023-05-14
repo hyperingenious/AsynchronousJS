@@ -90,3 +90,12 @@ const getCountries = function (country) {
 
 getCountries('PAKISTAN');
 */
+
+const getCountries = function (name) {
+  fetch(`https://restcountries.com/v3.1/name/${name}`)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => console.log(data));
+};
+getCountries('usa');
