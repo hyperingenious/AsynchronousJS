@@ -22,80 +22,44 @@ const renderCountry = function (data, className = '') {
   countriesContainer.insertAdjacentHTML('beforeend', html);
   countriesContainer.style.opacity = 1;
 };
-/*
-const getCountries = function (country) {
-  const request = new XMLHttpRequest();
-  request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
-  request.send();
-  request.addEventListener('load', function () {
-    const [data] = JSON.parse(this.responseText);
-    renderCountry(data);
 
-    if (!data?.borders) return;
-    const neighbour_code = data.borders[0];
-    const request2 = new XMLHttpRequest();
-    // prettier-ignore
-    request2.open('GET',`https://restcountries.com/v3.1/alpha/${neighbour_code}`);
-    request2.send();
-    request2.addEventListener('load', function () {
-      const [data] = JSON.parse(this.responseText);
-      renderCountry(data, 'neighbour');
-
-      if (!data?.borders) return;
-      const neighbour_code = data.borders[0];
-      const request3 = new XMLHttpRequest();
-      // prettier-ignore
-      request3.open('GET',`https://restcountries.com/v3.1/alpha/${neighbour_code}`);
-      request3.send();
-      request3.addEventListener('load', function () {
-        const [data] = JSON.parse(this.responseText);
-        renderCountry(data, 'neighbour');
-
-        if (!data?.borders) return;
-        const neighbour_code = data.borders[0];
-        const request4 = new XMLHttpRequest();
-        // prettier-ignore
-        request4.open('GET',`https://restcountries.com/v3.1/alpha/${neighbour_code}`);
-        request4.send();
-        request4.addEventListener('load', function () {
-          const [data] = JSON.parse(this.responseText);
-          renderCountry(data, 'neighbour');
-
-          if (!data?.borders) return;
-          const neighbour_code = data.borders[0];
-          const request5 = new XMLHttpRequest();
-          // prettier-ignore
-          request5.open('GET',`https://restcountries.com/v3.1/alpha/${neighbour_code}`);
-          request5.send();
-          request5.addEventListener('load', function () {
-            const [data] = JSON.parse(this.responseText);
-            renderCountry(data, 'neighbour');
-
-            if (!data?.borders) return;
-            const neighbour_code = data.borders[0];
-            const request6 = new XMLHttpRequest();
-            // prettier-ignore
-            request6.open('GET',`https://restcountries.com/v3.1/alpha/${neighbour_code}`);
-            request6.send();
-            request6.addEventListener('load', function () {
-              const [data] = JSON.parse(this.responseText);
-              renderCountry(data, 'neighbour');
-            });
-          });
-        });
-      });
-    });
-  });
+const renderError = function (e) {
+  btn.insertAdjacentText(
+    'beforebegin',
+    `${e} there is a error occured from our side`
+  );
 };
-
-getCountries('PAKISTAN');
-*/
 
 const getCountries = function (name) {
   fetch(`https://restcountries.com/v3.1/name/${name}`)
     .then(response => {
+      if (!response.ok) {
+        throw new Error(`Country not found ${response.status}`);
+      }
       return response.json();
     })
-    .then(data => console.log(data));
+    .then(data => {
+      const [destructuredData] = data;
+      renderCountry(destructuredData);
+
+      if (!destructuredData.borders) {
+        throw new Error(`no neighbour exists`);
+      }
+
+      const neighbour_code = destructuredData.borders[0];
+      return fetch(`https://restcountries.com/v3.1/alpha/${neighbour_code}`);
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Country not found ${response.status}`);
+      }
+
+      return response.json();
+    })
+    .then(data => {
+      const [destructuredData] = data;
+      renderCountry(destructuredData, 'neighbour');
+    })
+    .catch(renderError);
 };
-getCountries('usa');
+btn.addEventListener('click', () => getCountries('bharat'));
