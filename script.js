@@ -22,7 +22,7 @@ const renderCountry = function (data, className = '') {
   countriesContainer.insertAdjacentHTML('beforeend', html);
   countriesContainer.style.opacity = 1;
 };
-
+/*
 const getCountries = function (country) {
   const request = new XMLHttpRequest();
   request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
@@ -89,3 +89,4 @@ const getCountries = function (country) {
 };
 
 getCountries('PAKISTAN');
+*/
