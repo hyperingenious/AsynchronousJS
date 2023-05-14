@@ -23,43 +23,48 @@ const renderCountry = function (data, className = '') {
   countriesContainer.style.opacity = 1;
 };
 
+const helper = function (url, errorMsg) {
+  return fetch(url).then(response => {
+    if (!response.ok) {
+      throw new Error(`Country not found ${response.status}`);
+    }
+    return response.json();
+  });
+};
+
 const renderError = function (e) {
   btn.insertAdjacentText(
     'beforebegin',
     `${e} there is a error occured from our side`
   );
+  console.log(e);
 };
 
 const getCountries = function (name) {
   fetch(`https://restcountries.com/v3.1/name/${name}`)
     .then(response => {
-      if (!response.ok) {
-        throw new Error(`Country not found ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`Country not found ${response.status}`);
+
       return response.json();
     })
     .then(data => {
-      const [destructuredData] = data;
-      renderCountry(destructuredData);
+      const [nData] = data;
+      renderCountry(nData);
 
-      if (!destructuredData.borders) {
-        throw new Error(`no neighbour exists`);
-      }
+      if (!nData.borders) throw new Error(`no neighbour exists`);
 
-      const neighbour_code = destructuredData.borders[0];
-      return fetch(`https://restcountries.com/v3.1/alpha/${neighbour_code}`);
+      const neighbour = nData.borders[0];
+      return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
     })
     .then(response => {
-      if (!response.ok) {
-        throw new Error(`Country not found ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`Country not found ${response.status}`);
 
       return response.json();
     })
     .then(data => {
-      const [destructuredData] = data;
-      renderCountry(destructuredData, 'neighbour');
+      const [nData] = data;
+      renderCountry(nData, 'neighbour');
     })
-    .catch(renderError);
+    .catch(e => console.log(e));
 };
-btn.addEventListener('click', () => getCountries('bharat'));
+getCountries('pakistan');
