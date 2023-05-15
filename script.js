@@ -1,8 +1,5 @@
 'use strict';
 
-const btn = document.querySelector('.btn-country');
-const countriesContainer = document.querySelector('.countries');
-
 ///////////////////////////////////////
 //old school way
 
@@ -52,15 +49,20 @@ const countriesContainer = document.querySelector('.countries');
 // };
 // getCountries('pakistan');
 
+const whereBtn = document.querySelector('.where');
+const coordsBtn = document.querySelector('.coords');
+const countriesContainer = document.querySelector('.countries');
+const span = document.querySelector('.spn');
+
 const renderCountry = function (data, className = '') {
   const html = `
-    <article draggable="true" class="country ${className}">
+  <article draggable="true" class="country ${className}">
           <img class="country__img" src="${data.flags.svg}" />
           <div class="country__data">
-            <h3 class="country__name">${data.name.common}</h3>
-            <h4 class="country__region">${data.region}</h4>
-            <p class="country__row"><span>👫</span>${data.population}</p>
-            <p class="country__row"><span>🗣️</span> ${data.languages.hin}</p>
+          <h3 class="country__name">${data.name.common}</h3>
+          <h4 class="country__region">${data.region}</h4>
+          <p class="country__row"><span>👫</span>${data.population}</p>
+          <p class="country__row"><span>🗣️</span> ${data.languages.hin}</p>
             <p class="country__row"><span>💰</span> ${data.currencies}</p>
           </div>
         </article>
@@ -69,11 +71,27 @@ const renderCountry = function (data, className = '') {
   countriesContainer.insertAdjacentHTML('beforeend', html);
   countriesContainer.style.opacity = 1;
 };
+const removeButtons = function () {
+  whereBtn.remove();
+  coordsBtn.remove();
+  span.remove();
+};
 
-btn.addEventListener('click', function () {
+whereBtn.addEventListener('click', function () {
+  removeButtons();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(coords, e => console.log(e));
   }
+});
+coordsBtn.addEventListener('click', function () {
+  const html = `
+  <form action="" class="form">
+        <input type="number" name="" id="latitude" />
+        <input type="number" name="" id="longitude" />
+        <button class="submit-button">Submit</button>
+  </form>
+      `;
+  coordsBtn.insertAdjacentElement('afterend', html);
 });
 const coords = function (e) {
   const { latitude, longitude } = e.coords;
