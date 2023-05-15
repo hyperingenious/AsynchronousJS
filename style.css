@@ -12,7 +12,7 @@ html {
 body {
   font-family: system-ui;
   color: #555;
-  background-color: #f7f7f7;
+  /* background-color: #f7f7f7; */
   min-height: 100vh;
 
   display: flex;
@@ -102,11 +102,19 @@ body {
 button {
   border: none;
   font-size: 2rem;
-  padding: 1rem 3.5rem;
-  border-radius: 0.5rem;
-  color: white;
-  background-color: rgb(54, 54, 54);
+  padding: 1.3rem 2rem;
+  border-radius: 1rem;
+  border: 3px solid rgb(54, 54, 54);
+  color: rgb(54, 54, 54);
+  background-color: white;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: rgb(54, 54, 54);
+  color: white;
+  border-color: white;
 }
 .spn {
   font-size: 3rem;
@@ -114,7 +122,6 @@ button {
 .images {
   display: flex;
 }
-
 .images img {
   display: block;
   width: 80rem;
