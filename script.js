@@ -52,6 +52,7 @@
 const whereBtn = document.querySelector('.where');
 const coordsBtn = document.querySelector('.coords');
 const countriesContainer = document.querySelector('.countries');
+const load = document.querySelector('.load');
 const span = document.querySelector('.spn');
 
 const renderCountry = function (data, className = '') {
@@ -63,7 +64,7 @@ const renderCountry = function (data, className = '') {
           <h4 class="country__region">${data.region}</h4>
           <p class="country__row"><span>👫</span>${data.population}</p>
           <p class="country__row"><span>🗣️</span> ${data.languages.hin}</p>
-            <p class="country__row"><span>💰</span> ${data.currencies}</p>
+            <p class="country__row"><span>💰</span> ${data.currencies.INR.symbol}</p>
           </div>
         </article>
   `;
@@ -84,13 +85,18 @@ const coords = function (e) {
     .then(response => response.json())
     .then(data => {
       const [nData] = data;
+      console.log(nData);
       renderCountry(nData);
-    });
+    })
+    .finally((load.textContent = ''));
 };
 const removeButtons = function () {
   whereBtn.remove();
   coordsBtn.remove();
   span.remove();
+};
+const removeForms = function () {
+  document.querySelector('.form').remove();
 };
 const searchWithCoords = function () {
   const html = `
@@ -105,15 +111,36 @@ const searchWithCoords = function () {
 
   document.querySelector('.form').addEventListener('submit', function (e) {
     e.preventDefault();
+    load.textContent = 'Loading...';
     const lat = document.querySelector('#latitude').value;
     const lng = document.querySelector('#longitude').value;
 
-    fetch(``);
+    fetch(
+      `https://geocode.xyz/${lat},${lng}?geoit=json&auth=831253157316286630930x110214`
+    )
+      .then(response => response.json())
+      .then(data => {
+        if (!data.prov) throw new Error('No Country Found');
+        const nData = data.prov;
+        return fetch(`https://restcountries.com/v3.1/alpha/${data.prov}`);
+      })
+      .then(response => response.json())
+      .then(data => {
+        const [nData] = data;
+        renderCountry(nData);
+        removeForms();
+      })
+      .catch(e => {
+        console.error(e);
+        alert(`${e}`);
+      })
+      .finally((load.textContent = ''));
   });
 };
 
 const whereAmI = function () {
   removeButtons();
+  load.textContent = 'Loading...';
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(coords, e => console.log(e));
   }
