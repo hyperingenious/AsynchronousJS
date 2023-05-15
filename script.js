@@ -86,12 +86,13 @@ whereBtn.addEventListener('click', function () {
 coordsBtn.addEventListener('click', function () {
   const html = `
   <form action="" class="form">
-        <input type="number" name="" id="latitude" />
-        <input type="number" name="" id="longitude" />
-        <button class="submit-button">Submit</button>
+  <input type="value" name="" id="latitude" />
+  <input type="value" name="" id="longitude" />
+  <button class="submit-button">Submit</button>
   </form>
-      `;
-  coordsBtn.insertAdjacentElement('afterend', html);
+  `;
+  coordsBtn.insertAdjacentHTML('afterend', html);
+  removeButtons();
 });
 const coords = function (e) {
   const { latitude, longitude } = e.coords;
