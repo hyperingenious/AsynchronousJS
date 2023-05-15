@@ -87,8 +87,7 @@ const coords = function (e) {
       const [nData] = data;
       console.log(nData);
       renderCountry(nData);
-    })
-    .finally((load.textContent = ''));
+    });
 };
 const removeButtons = function () {
   whereBtn.remove();
@@ -101,8 +100,8 @@ const removeForms = function () {
 const searchWithCoords = function () {
   const html = `
   <form action="" class="form">
-  <input type="value" placeholder = "lat" name="" required id="latitude" />
-  <input type="value" placeholder = "lng" name="" required id="longitude" />
+  <input type="value" placeholder = "latitude" name="" required id="latitude" />
+  <input type="value" placeholder = "longitude" name="" required id="longitude" />
   <button class="submit-button">Submit</button>
   </form>
   `;
@@ -140,7 +139,6 @@ const searchWithCoords = function () {
 
 const whereAmI = function () {
   removeButtons();
-  load.textContent = 'Loading...';
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(coords, e => console.log(e));
   }
