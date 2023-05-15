@@ -71,29 +71,6 @@ const renderCountry = function (data, className = '') {
   countriesContainer.insertAdjacentHTML('beforeend', html);
   countriesContainer.style.opacity = 1;
 };
-const removeButtons = function () {
-  whereBtn.remove();
-  coordsBtn.remove();
-  span.remove();
-};
-
-whereBtn.addEventListener('click', function () {
-  removeButtons();
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(coords, e => console.log(e));
-  }
-});
-coordsBtn.addEventListener('click', function () {
-  const html = `
-  <form action="" class="form">
-  <input type="value" name="" id="latitude" />
-  <input type="value" name="" id="longitude" />
-  <button class="submit-button">Submit</button>
-  </form>
-  `;
-  coordsBtn.insertAdjacentHTML('afterend', html);
-  removeButtons();
-});
 const coords = function (e) {
   const { latitude, longitude } = e.coords;
   fetch(
@@ -110,3 +87,37 @@ const coords = function (e) {
       renderCountry(nData);
     });
 };
+const removeButtons = function () {
+  whereBtn.remove();
+  coordsBtn.remove();
+  span.remove();
+};
+const searchWithCoords = function () {
+  const html = `
+  <form action="" class="form">
+  <input type="value" placeholder = "lat" name="" required id="latitude" />
+  <input type="value" placeholder = "lng" name="" required id="longitude" />
+  <button class="submit-button">Submit</button>
+  </form>
+  `;
+  coordsBtn.insertAdjacentHTML('afterend', html);
+  removeButtons();
+
+  document.querySelector('.form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const lat = document.querySelector('#latitude').value;
+    const lng = document.querySelector('#longitude').value;
+
+    fetch(``);
+  });
+};
+
+const whereAmI = function () {
+  removeButtons();
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(coords, e => console.log(e));
+  }
+};
+
+whereBtn.addEventListener('click', whereAmI);
+coordsBtn.addEventListener('click', searchWithCoords);
