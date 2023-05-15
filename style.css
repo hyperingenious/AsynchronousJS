@@ -110,6 +110,15 @@ button {
   cursor: pointer;
   transition: 0.3s;
 }
+input#latitude,
+input#longitude {
+  transition: 0.4s;
+  border: 3px solid rgb(54, 54, 54);
+  font-size: 2rem;
+  padding: 1.3rem 2rem;
+  width: 7rem;
+  border-radius: 1rem;
+}
 
 button:hover {
   background-color: rgb(54, 54, 54);
