@@ -104,11 +104,11 @@ button {
   font-size: 2rem;
   padding: 1.3rem 2rem;
   border-radius: 1rem;
-  border: 3px solid rgb(54, 54, 54);
-  color: rgb(54, 54, 54);
-  background-color: white;
+  color: white;
+  background-color: rgb(54, 54, 54);
   cursor: pointer;
-  transition: 0.3s;
+  border: 3px solid rgb(54, 54, 54);
+  transition: 0.3ms;
 }
 input#latitude,
 input#longitude {
@@ -116,14 +116,15 @@ input#longitude {
   border: 3px solid rgb(54, 54, 54);
   font-size: 2rem;
   padding: 1.3rem 2rem;
-  width: 7rem;
+  width: 17rem;
   border-radius: 1rem;
 }
 
 button:hover {
-  background-color: rgb(54, 54, 54);
-  color: white;
+  background-color: white;
   border-color: white;
+  color: rgb(54, 54, 54);
+  border-color: rgb(54, 54, 54);
 }
 .spn {
   font-size: 3rem;
