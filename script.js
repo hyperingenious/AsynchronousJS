@@ -161,7 +161,27 @@ console.log('Test end');
 
 const promise = new Promise(function (resolve, reject) {
   if (Math.random() >= 0.5) {
-    resolve('You won the ticket 🔮');
+    function hello() {
+      return `Hello well friends I'm the skeleton returning from the dead determined to be relevent again so I am following the trends from the nether to the end`;
+    }
+    resolve(hello());
   } else reject('You Lost the lottery');
 });
-promise.then(res => console.log(res));
+promise.then(res => console.log(res)).catch(e => console.error(e));
+
+// Promisifying
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, 1000 * seconds);
+  });
+};
+
+wait(1)
+  .then(() => {
+    console.log(`We waited for 1sec`);
+    return wait(2);
+  })
+  .then(() => {
+    console.log('we waited for 2 sec');
+    return wait(3);
+  });
