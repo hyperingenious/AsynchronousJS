@@ -55,25 +55,27 @@
 // const load = document.querySelector('.load');
 // const span = document.querySelector('.spn');
 
-// const renderCountry = function (data, className = '') {
-//   const html = `
-//   <article draggable="true" class="country ${className}">
-//           <img class="country__img" src="${data.flags.svg}" />
-//           <div class="country__data">
-//           <h3 class="country__name">${data.name.common}</h3>
-//           <h4 class="country__region">${data.region}</h4>
-//           <p class="country__row"><span>👫</span>${data.population}</p>
-//           <p class="country__row"><span>🗣️</span> ${data.languages.hin}</p>
-//             <p class="country__row"><span>💰</span> ${data.currencies.INR.symbol}</p>
-//           </div>
-//         </article>
-//   `;
+const renderCountry = function (data, className = '') {
+  const html = `
+  <article draggable="true" class="country ${className}">
+          <img class="country__img" src="${data.flags.svg}" />
+          <div class="country__data">
+          <h3 class="country__name">${data.name.common}</h3>
+          <h4 class="country__region">${data.region}</h4>
+          <p class="country__row"><span>👫</span>${data.population}</p>
+          <p class="country__row"><span>🗣️</span> ${data.languages.hin}</p>
+            <p class="country__row"><span>💰</span> ${data.currencies.INR.symbol}</p>
+          </div>
+        </article>
+  `;
 
-//   countriesContainer.insertAdjacentHTML('beforeend', html);
-//   countriesContainer.style.opacity = 1;
-// };
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  countriesContainer.style.opacity = 1;
+};
 // const coords = function (e) {
 //   const { latitude, longitude } = e.coords;
+
+// // reverse geocoding
 //   fetch(
 //     `https://geocode.xyz/${latitude},${longitude}?geoit=json&auth=831253157316286630930x110214 `
 //   )
@@ -158,15 +160,16 @@ Promise.resolve('Resolved promise 2').then(res => {
 });
 console.log('Test end');
 */
-
+/*
 const promise = new Promise(function (resolve, reject) {
-  if (Math.random() >= 0.5) {
-    function hello() {
-      return `Hello well friends I'm the skeleton returning from the dead determined to be relevent again so I am following the trends from the nether to the end`;
-    }
-    resolve(hello());
-  } else reject('You Lost the lottery');
+  function hello() {
+    return `Hello well friends I'm the skeleton returning from the dead determined to be relevent again so I am following the trends from the nether to the end`;
+  }
+
+  if (Math.random() >= 0.5) resolve(hello());
+  else reject('You Lost the lottery');
 });
+
 promise.then(res => console.log(res)).catch(e => console.error(e));
 
 // Promisifying
@@ -176,7 +179,7 @@ const wait = function (seconds) {
   });
 };
 
-wait(1)
+wait(0)
   .then(() => {
     console.log(`We waited for 1sec`);
     return wait(2);
@@ -184,4 +187,33 @@ wait(1)
   .then(() => {
     console.log('we waited for 2 sec');
     return wait(3);
+  })
+  .then(() => {
+    console.log('We waited for 3 sec');
+    return wait(4);
+  })
+  .then(() => {
+    console.log('We waited for 4 sec');
+  });
+
+Promise.resolve(console.log('Hello I am resolve'));
+Promise.reject(console.log('Hello I am rejected'));
+*/
+
+const showCountry = function () {
+  return new Promise(function (response, reject) {
+    navigator.geolocation.getCurrentPosition(response, reject);
+  });
+};
+
+showCountry()
+  .then(loc => {
+    const { latitude, longitude } = loc.coords;
+    return fetch(
+      `https://geocode.xyz/${latitude},${longitude}?geoit=json&auth=831253157316286630930x110214 `
+    );
+  })
+  .then(response => response.json())
+  .then(jason => {
+    const countryCode = jason.prov;
   });
