@@ -146,7 +146,7 @@
 
 // whereBtn.addEventListener('click', whereAmI);
 // coordsBtn.addEventListener('click', searchWithCoords);
-
+/*
 console.log('Test start');
 document.addEventListener('keydown', () => document.write(`Hello`));
 Promise.resolve('Resolved promise 1').then(res => {
@@ -157,3 +157,11 @@ Promise.resolve('Resolved promise 2').then(res => {
   console.log(res);
 });
 console.log('Test end');
+*/
+
+const promise = new Promise(function (resolve, reject) {
+  if (Math.random() >= 0.5) {
+    resolve('You won the ticket 🔮');
+  } else reject('You Lost the lottery');
+});
+promise.then(res => console.log(res));
