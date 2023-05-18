@@ -308,3 +308,43 @@ createImg('img\\img-1.jpg');
 //   return (imgElem.style.display = 'none');
 // })
 // .catch(e => console.error(e));
+
+// navigator.geolocation.getCurrentPosition(
+//   function (e) {
+//     console.log(e);
+//   },
+//   e => console.error(e)
+// );
+
+// const revGeo = async function () {
+//   try {
+//     const geolocation = await new Promise(function (response, reject) {
+//       navigator.geolocation.getCurrentPosition(response, e =>
+//         reject(`${e.message} could not get your coordinates`)
+//       );
+//     });
+
+//     const { latitude, longitude } = geolocation.coords;
+//     const fetchingData = await fetch(
+//       `https://geocode.xyz/39928832,${longitude}?geoit=json&auth=831253157316286630930x110214`
+//     );
+//     if (!fetchingData.ok) throw new Error(`couldn't fetch your coordinates`);
+
+//     const res = await fetchingData.json();
+//     const country = res.prov;
+//     const fetchCountry = await fetch(
+//       `https://restcountries.com/v3.1/alpha/${country}`
+//     );
+
+//     console.log(fetchCountry.json());
+//     if (!fetchCountry.ok) throw new Error('Cannot find with the country name');
+
+//     const countryRes = await fetchCountry.json();
+//     const [data] = countryRes;
+//     renderCountry(data);
+//     console.log('Hello');
+//   } catch (error) {
+//     console.error(`${error}`);
+//   }
+// };
+// revGeo();
