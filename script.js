@@ -326,7 +326,7 @@ const revGeo = async function () {
 
     const { latitude, longitude } = geolocation.coords;
     const fetchingData = await fetch(
-      `https://geocode.xyz/39928832,${longitude}?geoit=json&auth=831253157316286630930x110214`
+      `https://geocode.xyz/${latitude},${longitude}?geoit=json&auth=831253157316286630930x110214`
     );
     if (!fetchingData.ok) throw new Error(`couldn't fetch your coordinates`);
 
@@ -336,19 +336,27 @@ const revGeo = async function () {
       `https://restcountries.com/v3.1/alpha/${country}`
     );
 
-    console.log(fetchCountry.json());
     if (!fetchCountry.ok) throw new Error('Cannot find with the country name');
 
     const countryRes = await fetchCountry.json();
     const [data] = countryRes;
     renderCountry(data);
     console.log('Hello');
+    throw new Error('Jai Mata ki');
+
+    return `hello well friends I'm the skeleton returning from the dead`;
   } catch (error) {
-    console.error(`${error}`);
+    // console.error(`${error}`);
+
+    throw error;
   }
-  return `hello well friends I'm the skeleton returning from the dead`;
 };
+
+// revGeo();
 (async function () {
-  const x = await revGeo();
-  console.log(x);
+  try {
+    await revGeo();
+  } catch (e) {
+    console.error(e, 'bole toh line no 358');
+  }
 })();
