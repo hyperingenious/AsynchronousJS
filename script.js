@@ -267,7 +267,7 @@ TEST DATA: Images in the img folder. Test the error handler by passing a wrong i
 
 GOOD LUCK 😀
 
-// Promisifying
+Promisifying
 const wait = function (seconds) {
   return new Promise(function (resolve) {
     setTimeout(resolve, 1000 * seconds);
