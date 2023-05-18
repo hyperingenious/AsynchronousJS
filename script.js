@@ -339,12 +339,12 @@ createImg('img\\img-1.jpg');
 //     console.log(fetchCountry.json());
 //     if (!fetchCountry.ok) throw new Error('Cannot find with the country name');
 
-    const countryRes = await fetchCountry.json();
-    const [data] = countryRes;
-    renderCountry(data);
-    console.log('Hello');
-  } catch (error) {
-    console.error(`${error}`);
-  }
-};
-revGeo();
+//     const countryRes = await fetchCountry.json();
+//     const [data] = countryRes;
+//     renderCountry(data);
+//     console.log('Hello');
+//   } catch (error) {
+//     console.error(`${error}`);
+//   }
+// };
+// revGeo();
