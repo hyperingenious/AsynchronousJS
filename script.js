@@ -295,7 +295,7 @@ const createImg = function (img) {
   });
 };
 createImg('img\\img-1.jpg');
-*/
+
 // .then(e => wait(2))
 // .then(() => {
 //   imgElem.style.display = 'none';
