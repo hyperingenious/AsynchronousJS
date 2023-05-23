@@ -3,15 +3,6 @@
 ///////////////////////////////////////
 //old school way
 
-// const helper = function (url, errorMsg) {
-//   return fetch(url).then(response => {
-//     if (!response.ok) {
-//       throw new Error(`Country not found ${response.status}`);
-//     }
-//     return response.json();
-//   });
-// };
-
 // const renderError = function (e) {
 //   btn.insertAdjacentText(
 //     'beforebegin',
@@ -315,7 +306,7 @@ createImg('img\\img-1.jpg');
 //   },
 //   e => console.error(e)
 // );
-
+/*
 const revGeo = async function () {
   try {
     const geolocation = await new Promise(function (response, reject) {
@@ -346,13 +337,10 @@ const revGeo = async function () {
 
     return `hello well friends I'm the skeleton returning from the dead`;
   } catch (error) {
-    // console.error(`${error}`);
-
     throw error;
   }
 };
-
-// revGeo();
+// Using an **IIFE**
 (async function () {
   try {
     await revGeo();
@@ -360,3 +348,44 @@ const revGeo = async function () {
     console.error(e, 'bole toh line no 358');
   }
 })();
+*/
+
+/*
+const helper = function (url, errorMsg) {
+  return fetch(url).then(response => {
+    if (!response.ok) {
+      throw new Error(`Country not found ${response.status}`);
+    }
+    return response.json();
+  });
+};
+const getCapital = async function (c1, c2, c3) {
+  try {
+    const country1 = await helper(`https://geocode.xyz/42.0681852,90.529643?geoit=json&auth=831253157316286630930x110214`);
+    const country2 = await helper(`https://geocode.xyz/42.0681852,90.529643?geoit=json&auth=831253157316286630930x110214`);
+    const country3 = await helper(`https://geocode.xyz/42.0681852,90.529643?geoit=json&auth=831253157316286630930x110214`);
+
+    console.log(country1.city, country2.city, country3.city);
+    
+    const geAll = await Promise.all([
+      helper(
+        `https://geocode.xyz/42.0681852,90.529643?geoit=json&auth=831253157316286630930x110214`
+      ),
+      helper(
+        `https://geocode.xyz/42.0681852,90.529643?geoit=json&auth=831253157316286630930x110214`
+      ),
+      helper(
+        `https://geocode.xyz/42.0681852,90.529643?geoit=json&auth=831253157316286630930x110214`
+      ),
+    ]);
+  } catch (er) {
+    console.error(er);
+  }
+};
+
+getCapital();
+*/
+Promise.race([
+  Promise.resolve(setTimeout(() => 'resolved first', 100000)),
+  Promise.resolve('Rejected first'),
+]).then(e => console.log(e));
