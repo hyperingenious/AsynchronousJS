@@ -439,21 +439,16 @@ const wait = function (seconds) {
 
 const imgContainer = document.querySelector('.images');
 
-const createImg = async function (img, i) {
+const createImg = async function (img) {
   try {
-    // const imgElem = document.createElement('img');
+    const imgElem = document.createElement('img');
 
     await new Promise(function (resolve, reject) {
-      const html = '<img class="parallel">';
-      imgContainer.insertAdjacentHTML('afterbegin', html);
-      const imgElem = document.querySelectorAll('.parallel')[i];
       imgElem.src = img;
-      // imgElem.src = img;
-      imgContainer.textContent = 'Loading...';
+      imgElem.classList.add('parallel');
 
       imgElem.addEventListener('load', function () {
-        // imgContainer.textContent = 'Loading Finished!';
-        // imgContainer.insertAdjacentElement('afterbegin', imgElem);
+        imgContainer.insertAdjacentElement('afterbegin', imgElem);
         resolve(imgElem);
         return imgElem;
       });
@@ -470,8 +465,6 @@ const createImg = async function (img, i) {
 
 (async function () {
   const imageArray = ['img\\img-1.jpg', 'img\\img-2.jpg', 'img\\img-3.jpg'];
-  const newImage = await Promise.all(
-    imageArray.map((img, i) => createImg(img, i))
-  );
+  const newImage = await Promise.all(imageArray.map(img => createImg(img)));
   console.log(newImage);
 })();
