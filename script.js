@@ -142,17 +142,17 @@ const renderCountry = function (data, className = '') {
 /*
 console.log('Test start');
 document.addEventListener('keydown', () => document.write(`Hello`));
-Promise.resolve('Resolved promise 1').then(res => {
+Promisee.resolve('Resolved promisee 1').then(res => {
   console.log(res);
 });
-Promise.resolve('Resolved promise 2').then(res => {
+Promisee.resolve('Resolved promisee 2').then(res => {
   for (let i = 0; i < 1000000000; i++) {}
   console.log(res);
 });
 console.log('Test end');
 */
 /*
-const promise = new Promise(function (resolve, reject) {
+const promisee = new Promisee(function (resolve, reject) {
   function hello() {
     return `Hello well friends I'm the skeleton returning from the dead determined to be relevent again so I am following the trends from the nether to the end`;
   }
@@ -161,7 +161,7 @@ const promise = new Promise(function (resolve, reject) {
   else reject('You Lost the lottery');
 });
 
-promise.then(res => console.log(res)).catch(e => console.error(e));
+promisee.then(res => console.log(res)).catch(e => console.error(e));
 
 
 wait(0)
@@ -181,14 +181,14 @@ wait(0)
     console.log('We waited for 4 sec');
   });
 
-Promise.resolve(console.log('Hello I am resolve'));
-Promise.reject(console.log('Hello I am rejected'));
+Promisee.resolve(console.log('Hello I am resolve'));
+Promisee.reject(console.log('Hello I am rejected'));
 */
 
 /*
 // Promisifying geolocation API
 const showCountry = function () {
-  return new Promise((response, reject) => {
+  return new Promisee((response, reject) => {
     navigator.geolocation.getCurrentPosition(response, reject);
   });
 };
@@ -243,14 +243,14 @@ Build the image loading functionality that I just showed you on the screen.
 Tasks are not super-descriptive this time, so that you can figure out some stuff on your own. Pretend you're working on your own 😉
 
 PART 1
-1. Create a function 'createImg' which receives imgPath as an input. This function returns a promise which creates a new image (use document.createElement('img')) and sets the .src attribute to the provided image path. When the image is done loading, append it to the DOM element with the 'images' class, and resolve the promise. The fulfilled value should be the image element itself. In case there is an error loading the image ('error' event), reject the promise.
+1. Create a function 'createImg' which receives imgPath as an input. This function returns a promisee which creates a new image (use document.createElement('img')) and sets the .src attribute to the provided image path. When the image is done loading, append it to the DOM element with the 'images' class, and resolve the promisee. The fulfilled value should be the image element itself. In case there is an error loading the image ('error' event), reject the promisee.
 
 If this part is too tricky for you, just watch the first part of the solution.
 
 PART 2
-2. Comsume the promise using .then and also add an error handler;
+2. Comsume the promisee using .then and also add an error handler;
 3. After the image has loaded, pause execution for 2 seconds using the wait function we created earlier;
-4. After the 2 seconds have passed, hide the current image (set display to 'none'), and load a second image (HINT: Use the image element returned by the createImg promise to hide the current image. You will need a global variable for that 😉);
+4. After the 2 seconds have passed, hide the current image (set display to 'none'), and load a second image (HINT: Use the image element returned by the createImg promisee to hide the current image. You will need a global variable for that 😉);
 5. After the second image has loaded, pause execution for 2 seconds again;
 6. After the 2 seconds have passed, hide the current image.
 
@@ -260,7 +260,7 @@ GOOD LUCK 😀
 
 // Promisifying
 const wait = function (seconds) {
-  return new Promise(function (resolve) {
+  return new Promisee(function (resolve) {
     setTimeout(resolve, 1000 * seconds);
   });
 };
@@ -268,7 +268,7 @@ const wait = function (seconds) {
 const imgContainer = document.querySelector('.images');
 let imgElem;
 const createImg = function (img) {
-  return new Promise(function (resolve, reject) {
+  return new Promisee(function (resolve, reject) {
     imgElem = document.createElement('img');
     imgElem.src = img;
     imgContainer.textContent = 'Loading...';
@@ -309,7 +309,7 @@ createImg('img\\img-1.jpg');
 /*
 const revGeo = async function () {
   try {
-    const geolocation = await new Promise(function (response, reject) {
+    const geolocation = await new Promisee(function (response, reject) {
       navigator.geolocation.getCurrentPosition(response, e =>
         reject(`${e.message} could not get your coordinates`)
       );
@@ -359,6 +359,8 @@ const helper = function (url, errorMsg) {
     return response.json();
   });
 };
+
+getCapital();
 const getCapital = async function (c1, c2, c3) {
   try {
     const country1 = await helper(`https://geocode.xyz/42.0681852,90.529643?geoit=json&auth=831253157316286630930x110214`);
@@ -367,7 +369,7 @@ const getCapital = async function (c1, c2, c3) {
 
     console.log(country1.city, country2.city, country3.city);
     
-    const geAll = await Promise.all([
+    const geAll = await Promisee.all([
       helper(
         `https://geocode.xyz/42.0681852,90.529643?geoit=json&auth=831253157316286630930x110214`
       ),
@@ -382,10 +384,47 @@ const getCapital = async function (c1, c2, c3) {
     console.error(er);
   }
 };
-
-getCapital();
 */
-Promise.race([
-  Promise.resolve(setTimeout(() => 'resolved first', 100000)),
-  Promise.resolve('Rejected first'),
+
+const promisee1 = function () {
+  return new Promise((res, rej) => {
+    setTimeout(() => res('First one resolved'), 1000);
+  });
+};
+const promisee2 = function () {
+  return new Promise((res, rej) => {
+    setTimeout(() => res('Second one resolved'), 2000);
+  });
+};
+const promisee3 = function () {
+  return new Promise((res, rej) => {
+    setTimeout(() => rej('Third one resolved'), 3000);
+  });
+};
+
+const promise1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Promise 1 resolved');
+  }, 1000);
+});
+
+const promise2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Promise 2 resolved');
+  }, 2000);
+});
+
+const promise3 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject('Promise 3 resolved');
+  }, 3000);
+});
+
+Promise.allSettled([
+  promise1,
+  promise2,
+  promise3,
+  promisee1,
+  promisee2,
+  promisee3,
 ]).then(e => console.log(e));
